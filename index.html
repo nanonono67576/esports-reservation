@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>面談予約 | 九州情報大学 esports部</title>
+  <meta name="description" content="九州情報大学 esports部の面談予約ページです。30分の面談をGoogleカレンダーから予約できます。">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6fbf8;
+      --paper: #ffffff;
+      --ink: #17231f;
+      --muted: #5d6a64;
+      --line: #dce7e2;
+      --accent: #009b7a;
+      --accent-strong: #00745c;
+      --cyan: #23c7c9;
+      --yellow: #ffd15c;
+      --shadow: 0 18px 50px rgba(23, 35, 31, 0.12);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(35, 199, 201, 0.18), transparent 28rem),
+        radial-gradient(circle at 90% 8%, rgba(255, 209, 92, 0.28), transparent 24rem),
+        linear-gradient(135deg, #f6fbf8 0%, #edf8f3 100%);
+      color: var(--ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 42px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      object-fit: cover;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .brand-sub {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro {
+      padding: 16px 0 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--accent-strong);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: var(--cyan);
+      box-shadow: 14px 0 0 var(--yellow);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.45rem, 5vw, 4.8rem);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 22px 0 0;
+      color: #32413c;
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      line-height: 1.8;
+    }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 36px 0 0;
+    }
+
+    .fact {
+      min-height: 112px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .fact-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .fact-value {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.12rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .booking-panel {
+      align-self: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(0, 155, 122, 0.14), rgba(35, 199, 201, 0.14)),
+        var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .panel-head h2 {
+      margin: 8px 0 0;
+      font-size: 1.55rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .panel-body {
+      padding: 24px;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+
+    .cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 56px;
+      margin-top: 24px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 850;
+      text-decoration: none;
+      box-shadow: 0 12px 24px rgba(0, 116, 92, 0.24);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .cta:hover {
+      background: var(--accent-strong);
+      box-shadow: 0 16px 28px rgba(0, 116, 92, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .steps {
+      margin-top: 34px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .steps h2 {
+      margin: 0 0 16px;
+      font-size: 1.25rem;
+      letter-spacing: 0;
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      background: #e7f7f2;
+      color: var(--accent-strong);
+      font-weight: 850;
+    }
+
+    .step p {
+      margin: 0;
+      color: #31403a;
+      line-height: 1.65;
+    }
+
+    footer {
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        width: min(100% - 24px, 720px);
+        padding-top: 20px;
+      }
+
+      header {
+        align-items: flex-start;
+        margin-bottom: 30px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding-top: 0;
+      }
+
+      .quick-facts,
+      .step-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 560px) {
+      header {
+        flex-direction: column;
+      }
+
+      .header-link {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.55rem;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .panel-head,
+      .panel-body {
+        padding: 20px;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand" aria-label="九州情報大学 esports部">
+        <img src="https://lh3.googleusercontent.com/a/ACg8ocICAfPMPby4WiYlhSrqbbHlzdh5B_GQkJ3RhxbOLsEHL9-JBw=mo-s256" alt="九州情報大学 esports部">
+        <div class="brand-text">
+          <p class="brand-title">九州情報大学 esports部</p>
+          <p class="brand-sub">面談予約ページ</p>
+        </div>
+      </div>
+      <a class="header-link" href="https://calendar.app.google/SUoaF3ErQ62B84Qp7" target="_blank" rel="noopener noreferrer">Googleカレンダーで開く</a>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">30分の面談予約</p>
+        <h1 id="page-title">九州情報大学 esports部 面談予約</h1>
+        <p class="lead">希望する日時をGoogleカレンダーの水色の日から選んで、面談を予約してください。場所は1号館203です。</p>
+
+        <div class="quick-facts" aria-label="予約の概要">
+          <div class="fact">
+            <span class="fact-label">所要時間</span>
+            <span class="fact-value">30分</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">場所</span>
+            <span class="fact-value">1号館 203</span>
+          </div>
+          <div class="fact">
+            <span class="fact-label">タイムゾーン</span>
+            <span class="fact-value">日本標準時</span>
+          </div>
+        </div>
+
+        <section class="steps" aria-labelledby="steps-title">
+          <h2 id="steps-title">予約の流れ</h2>
+          <div class="step-grid">
+            <div class="step">
+              <span class="step-number">1</span>
+              <p>下の予約ボタンからGoogleカレンダーを開きます。</p>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <p>表示された空き時間から、都合のよい日時を選びます。</p>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <p>必要事項を入力して予約を確定してください。</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="booking-panel" aria-labelledby="booking-title">
+        <div class="panel-head">
+          <p>Googleカレンダー予約</p>
+          <h2 id="booking-title">空き時間を確認して予約</h2>
+        </div>
+        <div class="panel-body">
+          <dl class="detail-list">
+            <div class="detail-row">
+              <dt>予約名</dt>
+              <dd>面談予約</dd>
+            </div>
+            <div class="detail-row">
+              <dt>主催</dt>
+              <dd>九州情報大学 esports部</dd>
+            </div>
+            <div class="detail-row">
+              <dt>時間</dt>
+              <dd>30分</dd>
+            </div>
+            <div class="detail-row">
+              <dt>場所</dt>
+              <dd>1号館 203</dd>
+            </div>
+            <div class="detail-row">
+              <dt>時間表示</dt>
+              <dd>GMT+09:00 日本標準時</dd>
+            </div>
+          </dl>
+
+          <a class="cta" href="https://calendar.app.google/SUoaF3ErQ62B84Qp7" target="_blank" rel="noopener noreferrer">予約日時を選ぶ</a>
+          <p class="note">空き状況はGoogleカレンダー上で更新されます。ボタンを押すと予約ページが別タブで開きます。</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Googleカレンダーの予約スケジュール機能を使用します。予約時にはGoogleのプライバシーポリシーと利用規約が適用されます。
+    </footer>
+  </div>
+</body>
+</html>
